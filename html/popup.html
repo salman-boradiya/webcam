@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../../css/bootstrap.css">
+  <link rel="stylesheet" href="../../css/popup.css">
+  <script type="text/javascript" src="../../libs/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="../../js/iframe.js"></script>
+
+</head>
+
+<body class=" login">
+    <div class="loading">Loading&#8230;</div>
+
+    <div class="contentarea">
+        <div class="main-c">
+            <div class="alert alert-success" id="sucees-msg">
+              <strong>Success!</strong> you will be redirecting to profile tab .
+          </div>
+
+          
+
+          <div class="alert alert-warning" id="warning-msg">
+              <strong>Warning!</strong> Something went wrong!!
+          </div>
+
+          <div class="camera">
+            <video id="video">Video stream not available.</video>
+        </div>
+    </div>
+
+    <div><button id="startbutton">Take photo</button></div>
+    <canvas id="canvas"></canvas>
+    <div class="output">
+        <img id="photo" alt="The screen capture will appear in this box.">
+    </div>
+    <div><button id="submitbutton">Submit</button></div>
+</div>
+</body>
+
+</html>

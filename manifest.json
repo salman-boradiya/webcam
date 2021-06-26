@@ -1,0 +1,41 @@
+{
+	"name": "Webcam Chrome extension",
+	"version": "1.0",
+	"description": "Webcam Chrome extension",
+	"permissions": ["activeTab","cookies","contentSettings","https://demo.mews.li/*"],
+
+	"browser_action": {
+		"default_icon": {
+			"128": "images/ext.png",
+			"16": "images/ext.png",
+			"19": "images/ext.png",
+			"24": "images/ext.png",
+			"32": "images/ext.png",
+			"48": "images/ext.png"
+
+		},
+		"default_popup": "html/popup.html",
+		"default_title": "Webcam Chrome extension"
+	},
+	"icons": {
+			"128": "images/ext.png",
+			"16": "images/ext.png",
+			"19": "images/ext.png",
+			"24": "images/ext.png",
+			"32": "images/ext.png",
+			"48": "images/ext.png"
+	},
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"background": {
+		"scripts": ["libs/jquery-3.1.1.min.js","js/background.js"]
+	},
+	"content_scripts": [
+		{"matches": ["https://demo.mews.li/*"],
+			"js":["libs/jquery-3.1.1.min.js","libs/jquery-ui.js","js/check-ext-exipre.js","contentscript/content.js"],
+			"css":["css/jquery-ui.css"],
+			"run_at":"document_end"
+		}
+	],
+	"web_accessible_resources": [ "html/*","images/*","js/*","contentscript/*" ],
+	"manifest_version": 2
+}
