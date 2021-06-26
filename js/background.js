@@ -17,6 +17,9 @@ var myApp = {
       case "openSettingPage":
       myApp.openSettingPage(message.data, sender, sendResponse);
       break;
+      case "uploadUserImage":
+      myApp.uploadUserImage(message.data, sender, sendResponse);
+      break;
       case "console_logs_myApp":
       console_logs_myApp(message.title,message.msg);
       break;
@@ -55,6 +58,42 @@ var myApp = {
       sendResponse({uiSettings:uiSettings});
     }
   },
+    uploadUserImage:function(postData){
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://demo.mews.li/api/commander/v1/customers/addFile",
+      "method": "POST",
+      "headers": {
+        "cache-control": "no-cache",
+        "postman-token": "0cdcbb32-beb8-86ee-12fa-a1a6be7d2a16"
+      },
+      "data": "{\"AccountId\":null,\"ProfileId\":\""+postData.ProfileId+"\",\"ScopeId\":\""+postData.ScopeId+"\",\"AccessToken\":\""+postData.AccessToken+"\",\"Application\":\"\",\"CustomerId\":\""+postData.CustomerId+"\",\"Data\":\""+postData.data+"\",\"Name\":\""+postData.Name+"\",\"Type\":\"image/png\",\"Client\":\"Mews Web Commander 5.885.1\"}"
+    }
+
+    $.ajax(settings).done(function (response) {
+      $('.loading').hide();
+      console.log(response);
+      $('.camera').hide();
+      $('#startbutton').hide();
+      $('#sucees-msg').show();
+      setTimeout(function(){
+        var msg = 'reload-frame';
+        sendMessage1('' + msg);
+      },4000)
+    })
+    .fail(function (response) {
+      $('.loading').hide();
+      console.log(response);
+      $('.camera').hide();
+      $('#startbutton').hide();
+      $('#warning-msg').show();
+      setTimeout(function(){
+        var msg = 'reload-frame';
+        sendMessage1('' + msg);
+      },4000)
+    });
+  },
   openSettingPage:function(){
       // open extension new tab if check is open or not
       var pageURL = chrome.runtime.getURL("html/settings.html");
@@ -71,13 +110,13 @@ var myApp = {
     },
 
   };
-  chrome.tabs.onActivated.addListener(function (info) {
+ /* chrome.tabs.onActivated.addListener(function (info) {
     chrome.tabs.get(info.tabId, function (tab) {
       if (tab.url!=undefined) {
         var current_url = tab.url;
       } 
     });
-  });
+  });*/
 
   chrome.tabs.onRemoved.addListener(function(tabId, removeInfo) {
 

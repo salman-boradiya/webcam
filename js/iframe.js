@@ -19,7 +19,8 @@ function handleMessage(message, sender) {
 
 window.addEventListener("load",function() {
   chrome.runtime.onMessage.addListener(handleMessage);
-  myPopupPage.load();
+
+
 });
 
 var uiSettings;
@@ -31,15 +32,33 @@ var myPopupPage = {
   } ,
 
   addEvents: function(){
-    $('#submitbutton').off().on('click',function(e){
+    
+    $('.fancybox-close-small').off().on('click',function(e){
+      $('#fancy-href').show();
+    })
+
+    $('#retakebutton').off().on('click',function(e){
+      location.reload();
+    })
+
+    $('#cancelbutton,#cancelbutton1').off().on('click',function(e){
+     var msg = 'close-frame';
+     sendMessage1('' + msg);
+   })
+
+
+    $('#savebutton').off().on('click',function(e){
       $('.loading').show();
       var strToReplace = $('#photo').attr('src');
+
       var strImage = strToReplace.replace(/^data:image\/[a-z]+;base64,/, "");
       var name=makeid(11)+'.png';
       myPopupPage.getCookies("https://demo.mews.li/", "AccessToken", function(AccessToken) {
         if (AccessToken !="") {
           var postData={Name:name,data:strImage,AccessToken:AccessToken,ProfileId:'455a381e-888a-4b22-87f2-ad5100902cb5',ScopeId:'Enterprise_0618eabf-36f4-4ec0-83e4-ab0c007452ca',CustomerId:'61448173-76f7-4f64-b205-ace600241ae1'}
+          
           myPopupPage.uploadUserImage(postData)
+
         }
       });
     })
@@ -68,6 +87,7 @@ var myPopupPage = {
       "url": "https://demo.mews.li/api/commander/v1/customers/addFile",
       "method": "POST",
       "headers": {
+        "content-type": "application/json",
         "cache-control": "no-cache",
         "postman-token": "0cdcbb32-beb8-86ee-12fa-a1a6be7d2a16"
       },
@@ -82,7 +102,7 @@ var myPopupPage = {
       $('#sucees-msg').show();
       setTimeout(function(){
         var msg = 'reload-frame';
-        sendMessage('' + msg);
+        sendMessage1('' + msg);
       },4000)
     })
     .fail(function (response) {
@@ -93,12 +113,12 @@ var myPopupPage = {
       $('#warning-msg').show();
       setTimeout(function(){
         var msg = 'reload-frame';
-        sendMessage('' + msg);
+        sendMessage1('' + msg);
       },4000)
     });
   },
   hasPermission:function(){
-        var width = 260; // We will scale the photo width to this
+        var width = 340; // We will scale the photo width to this
         var height = 0; // This will be computed based on the input stream
 
         var streaming = false;
@@ -130,6 +150,7 @@ var myPopupPage = {
           video.addEventListener('canplay', function(ev) {
 
             if (!streaming) {
+              onPlay();
               height = video.videoHeight / (video.videoWidth / width);
 
               if (isNaN(height)) {
@@ -140,6 +161,7 @@ var myPopupPage = {
               video.setAttribute('height', height);
               canvas.setAttribute('width', width);
               canvas.setAttribute('height', height);
+              $('#canvas').show();
               streaming = true;
 
             }
@@ -161,6 +183,7 @@ var myPopupPage = {
 
           var data = canvas.toDataURL('image/png');
           photo.setAttribute('src', data);
+          $('#fancy-href').href(data)
         }
 
         function takepicture() {
@@ -172,6 +195,9 @@ var myPopupPage = {
 
             var data = canvas.toDataURL('image/png');
             photo.setAttribute('src', data);
+            $('#fancy-href').attr('href',data)
+            $('.output').css('display','inline-block');
+            $('.camera').hide()
             _stream.getTracks().forEach(function(track) {
               track.stop();
             });
@@ -193,8 +219,8 @@ var myPopupPage = {
           left: parseInt((screen.width / 2) - (popup_width / 2)),
           focused: true
         });
-         var msg = 'close-frame';
-        sendMessage('' + msg);
+        var msg = 'close-frame';
+        sendMessage1('' + msg);
 
       },
       getCameraContentSettngs:function(){
@@ -205,6 +231,7 @@ var myPopupPage = {
           if (details.setting=='ask') {
             myPopupPage.getPermissionCamera();
           }else{
+
             myPopupPage.hasPermission('camera');
           }
         });
@@ -212,7 +239,7 @@ var myPopupPage = {
 
     };
 
-    var sendMessage = function(msg) {
+    var sendMessage1 = function(msg) {
       window.parent.postMessage(msg, '*');
     };
 

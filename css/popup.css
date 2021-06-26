@@ -132,11 +132,11 @@
     width: 260px;
     height: 195px;
 }
-
-#canvas {
+/*
+.output {
     display: none;
 }
-
+*/
 .camera {
     width: 260px;
     display: inline-block;
@@ -144,27 +144,51 @@
 
 .output {
     width: 260px;
-    display: inline-block;
+    display: none;
 }
 
 #startbutton {
-    display: block;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    bottom: 36px;
-    padding: 5px;
-    background-color: #6a67ce;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    font-size: 14px;
-    color: rgba(255, 255, 255, 1.0);
-    cursor: pointer;
+
 }
 
 .contentarea {
     font-size: 16px;
     font-family: Arial;
     text-align: center;
+        margin: 90px auto;
+}
+.cust-btn{
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 3px 11px;
+  border: 0px;
+  border-radius: 5px;
+  height: 33px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  background-color: #fbbb00;
+  color: #000;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 12px !important;
+  box-shadow: 0px 17px 10px -10px rgba(0,0,0,0.4);
+  margin-top: 5px;
+}
+.btn-toolbar {
+    margin-left: -5px;
+     
+}
+#canvas{
+  display: none;
 }
 #submitbutton{
   display: inline-flex;
